@@ -10,8 +10,9 @@ mpl.rcParams['axes.facecolor'] = 'black'
 # Square hiearchical interdigitated flow field
 
 block_height_num = 37 #number of fins = block_height_num - 1 
-unit_height = 5
 block_length_num = 10
+
+unit_height = 5
 a = np.arange(0,block_height_num*2,1)
 x = []
 
@@ -65,7 +66,7 @@ full_x = np.append(full_x,full_x[-1]+fin_length)
 full_y = np.append(full_y,full_y[-1])
 full_y = full_y + start_y
 # The pattern does not fit in square when all channel is equal to 1.
-compress2square = (max(full_x)-2)/y[-1]
+# compress2square = (max(full_x)-2)/y[-1]
 
 tot_x_length = max(full_x)-min(full_x)
 tot_y_length = ((block_height_num - 1)*2*unit_height)+start_y*2
