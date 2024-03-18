@@ -9,19 +9,27 @@ mpl.rcParams['axes.facecolor'] = 'black'
 
 # Square hiearchical interdigitated flow field
 
-block_height_num = 37 #number of fins = block_height_num - 1 
-block_length_num = 10
+block_height_num = 2 #number of fins = block_height_num - 1 
+block_length_num = 1
+unit_height1 = 2
+fin_thinness = 0  # 0 for equal, >0 for thinner <0 for thicker
 
-unit_height = 5
+const = 2.63157894737
+
+start_x = const
+start_y = 5
+fin_length = start_x + const
+gap1 = fin_length + const
+gap2 = const
+
+# Calculate dimention
+height = start_y*2+unit_height1*(block_height_num-1)*2
+print(height,"height")
+width = (gap2*4)*(block_length_num-1)+start_x+fin_length
+print(width,"width")
+
 a = np.arange(0,block_height_num*2,1)
 x = []
-
-start_x = 5
-start_y = 10
-fin_length = start_x + 10
-gap1 = fin_length + 10
-gap2 = 10
-
 for i in a:
     x.append(start_x)
     x.append(start_x)
@@ -29,8 +37,12 @@ for i in a:
     x.append(fin_length)
 y = []
 for k in a:
-    y.append(k*unit_height)
-    y.append(k*unit_height)
+    if k%2 == 0:
+        y.append(k*unit_height1)
+        y.append(k*unit_height1)
+    else:
+        y.append(k*unit_height1+fin_thinness)
+        y.append(k*unit_height1+fin_thinness)
     
 # print(y)
 x = x[1:]   
@@ -69,7 +81,7 @@ full_y = full_y + start_y
 # compress2square = (max(full_x)-2)/y[-1]
 
 tot_x_length = max(full_x)-min(full_x)
-tot_y_length = ((block_height_num - 1)*2*unit_height)+start_y*2
+tot_y_length = max(full_y)-min(full_y)+start_y*2
 
 if tot_y_length != tot_x_length:
     print("NOT SQUARE")
@@ -81,10 +93,17 @@ else:
     print(tot_x_length, "Width")
 
 plt.plot(full_x,full_y,"-o",markersize=0.5,linewidth=2,color="blue")
-plt.xlim(0,max(full_x))
-plt.ylim(0,max(full_x))
+# plt.xlim(0,max(full_x))
+# plt.ylim(0,max(full_x))
+plt.xlim(0,50)
+plt.ylim(0,50)
 plt.gca().set_aspect('equal')
 # plt.facecolor('xkcd:salmon')
 # ax.set_facecolor((1.0, 0.47, 0.42))
 plt.show()
 
+points = []
+for i in np.arange(0,len(full_x),1):
+    points.append((full_x[i],full_y[i], 0))
+    
+print(points)

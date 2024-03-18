@@ -8,17 +8,21 @@ doc = App.activeDocument()
 sketch = doc.addObject('Sketcher::SketchObject', 'Flow Field')
 doc.recompute()
 
-block_height_num = 39 #number of fins = block_height_num - 1 
-block_length_num = 2
-unit_height = 5
+block_height_num = 2 #number of fins = block_height_num - 1 
+block_length_num = 1
+unit_height1 = 3.333333333333333
+unit_height2 = 3.333333333333333
+
+const = 2.6315789477
+
+start_x = const
+start_y = 5
+fin_length = start_x + const
+gap1 = fin_length + const
+gap2 = const
+
 a = np.arange(0,block_height_num*2,1)
 x = []
-
-start_x = 5
-start_y = 10
-fin_length = start_x + 10
-gap1 = fin_length + 10
-gap2 = 10
 
 for i in a:
     x.append(start_x)
@@ -27,8 +31,8 @@ for i in a:
     x.append(fin_length)
 y = []
 for k in a:
-    y.append(k*unit_height)
-    y.append(k*unit_height)
+    y.append(k*unit_height1)
+    y.append(k*unit_height2)
     
 # print(y)
 x = x[1:]   
@@ -69,6 +73,7 @@ points = []
 for i in np.arange(0,len(full_x),1):
     points.append(App.Vector(full_x[i],full_y[i], 0))
 
+print(points)
 # Add the points to the sketch
 for i, point in enumerate(points):
     sketch.addGeometry(Part.LineSegment(points[i - 1], point), False)
